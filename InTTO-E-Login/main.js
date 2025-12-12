@@ -21,7 +21,7 @@ function createWindow() {
     },
     autoHideMenuBar: true,
   });
-
+// grant mo to gago
   // Grant camera permissions for this window
   mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
     console.log('Window permission requested:', permission);
