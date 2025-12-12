@@ -1,0 +1,647 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap");
+
+:root {
+  --background_green: #0f803e;
+  --background_black: #101318;
+  --containers: linear-gradient(to right, #18171790 20%, #58535c30 80%);
+  --whitenesscolor: white;
+  --font-poppins: "Poppins", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: #101318;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.lights {
+  background-color: #0f803e;
+  width: 80vw;
+  height: 80vw;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  filter: blur(30rem);
+  border-radius: 100%;
+  z-index: -1;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 100% 90%;
+  animation: rotateAround 10s linear infinite;
+}
+
+
+    @keyframes rotateAround {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-poppins);
+  color: var(--whitenesscolor);
+}
+
+
+
+
+/* ------------------------- sessionPage.html ---------------- */
+
+
+.session-page-main {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  height: 60%;
+  gap: calc(1.5vh);
+  justify-content: center;
+  align-items: center;
+}
+
+.left-side {
+  gap: calc(1.5vh);
+  display: flex;
+  flex-direction: column;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.5vh);
+  position: relative;
+}
+
+.background{
+  z-index: -1;
+  width: 100%;
+}
+
+.E-login {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginheadermessage{
+  font-size: clamp(1rem, 5vw, 3rem);
+}
+
+.loginhead{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.uc{
+  width: 5vw;
+}
+
+.intto{
+  width: 8vw;
+}
+
+.choices{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.selection-container{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.choices:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.login-selection{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1vw;
+  font-size: clamp(1rem, 1vw, 1.5rem);
+}
+
+.login-selection img{
+  width: clamp(2rem, 3vw, 10rem);
+}
+
+.rate {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.Calendar{
+  width: fit-content;
+  height: fit-content;
+}
+
+.data {
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.time{
+  font-size: clamp(1rem, 7vw, 8rem);
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+  width: max-content;
+  height: max-content;
+  line-height: 1;
+}
+
+.date{
+  font-size: clamp(1rem, 5vw, 6rem);
+  font-weight: 100;
+  line-height: 1;
+  align-self: center;
+}
+
+.weather{
+  font-size: clamp(1rem, 3vw, 6rem);
+  font-weight: 100;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.weather img{
+  width: clamp(1rem,5vw,5rem);
+  height: clamp(1rem,5vw,5rem);
+  margin-right: clamp(1rem,10vw,6vw);
+  align-self: center;
+}
+
+.instagram, .facebook, .mail, .phone{
+  font-size: clamp(1rem, 0.5vw,2rem);
+  display: flex;
+  align-items: center;
+  width: 40%;
+  margin-left: 2vw;
+}
+
+.moment,
+.spontaneous {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  color: lightgray;
+}
+
+.moment {
+  right: 0;
+}
+
+.spontaneous {
+  left: 0;
+}
+
+/* ------------------------- IM INTERNING IT.html ---------------- */
+
+.login-page {
+  display: flex;
+  height: calc(100vh);
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-poppins);
+}
+
+.registration-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.header-content{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+}
+
+.header img {
+  width: 35%;
+  padding-left: 2rem;
+}
+
+.header h1 {
+  color: white;
+  font-weight: 200;
+  font-size: clamp(2.5vw, 2.5vw, 2.5vw);
+}
+
+.registration {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.user-reg-container{
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.user-registry {
+  padding: 0.5rem 0rem 0rem 5rem;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 1.5rem;
+  color: white;
+}
+
+.user-registry h1 {
+  font-weight: 200;
+  font-size:2vw;
+}
+
+.user-registry input {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid grey;
+  font-size: 1.2rem;
+  color: white;
+  font-family: var(--font-poppins);
+}
+
+.user-registry .submit {
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.user-registry .submit:hover {
+  opacity: 0.8;
+}
+
+.selection select {
+  background-color: transparent;
+  padding: 0.5rem;
+  color: white;
+  border-radius: 8px;
+  margin-right: 1.2rem;
+}
+
+
+option {
+  color: white;
+  background-color: black;
+}
+
+.back-button{
+  background-color: rgba(0, 0, 0, 0);
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 92%;
+  left: 72.5%;
+  width: fit-content;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: white;
+}
+
+.back-button:hover{
+  transform: scale(1.05);
+}
+
+.back-button h2{
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+}
+
+.intern-list {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  position: relative;
+}
+
+.user-list{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.search {
+  width: 100%;
+}
+
+.search input {
+  width: 90%;
+  margin: 1vw;
+  border-radius: 15px;
+  padding: 0.5vw;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  border: solid 1px white;
+}
+
+.list {
+  width: 90%;
+  margin: 0 auto;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.person {
+  width: 100%;
+  border-top: solid white 1px;
+  border-bottom: solid white 1px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.person-top {
+  display: flex;
+  margin-right: 1.5rem;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.person-bottom {
+  margin-top: 0;
+  margin-right: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.person-bottom button {
+  background-color: var(--containers);
+  color: white;
+  border: solid white 1px;
+  border-radius: 15px;
+  height: 2rem;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.person-bottom button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px white;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 30%;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--containers);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* ADMIN--------------------------------------------------------- */
+.admincontainer{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.admin-header{
+  position: relative;
+  
+}
+
+.admin-header-content{
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: var(--font-poppins);
+  color: white;
+  padding: 0.5rem;
+  font-size: 150%;
+}
+
+.admin-header-content img{
+  width: 30%;
+}
+
+.admin-header-content h1{
+    font-weight: 100;
+      font-size:2vw;
+}
+
+
+.header img {
+  width: 35%;
+  padding-left: 2rem;
+}
+
+.header h1 {
+  color: white;
+  font-weight: 200;
+  font-size: clamp(2.5vw, 2.5vw, 2.5vw);
+}
+
+
+.admin-right{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: fit-content;
+}
+
+.admin-tabs{
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+
+.tab1, .tab2{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: rgb(124, 124, 124);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 5;
+  font-size: 1.5rem;
+  margin-right: 1.6rem;
+  margin-left:0.15rem ; 
+}
+
+.admin-data-tab1,
+.admin-data-tab2 {
+  display: none;
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  top: 10%;
+  left: 0;
+  flex-wrap: wrap;
+}
+
+.admin-data-tab1.active,
+.admin-data-tab2.active {
+  display: flex;
+}
+
+.admin-left{
+  position: relative;
+}
+
+.logs{
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  top: 0;
+  font-family: var(--font-poppins);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-back-button{
+  background-color: rgba(0, 0, 0, 0);
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 93%;
+  left: 64%;
+  width: fit-content;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: white;
+}
+
+.admin-back-button:hover{
+  transform: scale(1.05);
+}
+
+.count{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.count h1{
+  font-size: 6rem;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.count p{
+  padding: 0;
+  margin: 0;
+}
+
+.count-legend{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 0.2;
+}
+
+.admin-tab1-content1, .admin-tab1-content2, .admin-tab1-content3{
+  width: 35%;
+  height: 50%;
+  margin: auto 0% auto 5%
+}
+
+
+
+.admin-tab1-content4{
+  width: 35%;
+  height: 50%;
+  margin: auto 0% auto 10%;
+}
+
+.admin-tab1-content2{
+  color: white;
+  font-family: var(--font-poppins) ;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+
+.tab1:hover, .tab2:hover{
+  transform: scale(1.05);
+}
+
+.data-container{
+  position: relative;
+}
+
+.admin-tabs button.active {
+  color: white;
+}
+
+
+.admin-data-tab1{
+  position: absolute;
+  top: 10%;
+}
