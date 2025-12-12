@@ -6,6 +6,8 @@ const searchBar = document.getElementById("search-bar");
 const listContainer = document.getElementById("list");
 const toggleButton = document.getElementById("toggle-status");
 const backButton = document.getElementById('back-button');
+const idNumberInput = document.getElementById('id-number');
+const submitBtn = document.getElementById('submit-btn');
 
 let selectedIntern = null;
 
@@ -188,42 +190,209 @@ listContainer.addEventListener("click", async (event) => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
+  // Show scanning status
+  const originalBtnText = submitBtn.value;
+  submitBtn.value = 'Scanning ID...';
+  submitBtn.disabled = true;
 
-  data.honorifics = data.honorifics || "Mr.";
-  data.suffix = data.suffix || "";
-  data.status = "Time-In";
+  try {
+    // Scan barcode first
+    const scannedId = await scanBarcodeSimple();
+    idNumberInput.value = scannedId;
+    
+    // Then submit form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-  const now = moment().format("hh:mm a");
+    data.honorifics = data.honorifics || "Mr.";
+    data.suffix = data.suffix || "";
+    data.status = "Time-In";
 
-  if (!data.timeIn && !data.timeOut) {
-    data.logs = {
-      timeIn: now,
-      timeOut: ""
-    };
-  }
+    const now = moment().format("hh:mm a");
 
-  const newName = data["full name"];
-
-  if (selectedIntern) {
-    if (selectedIntern !== newName) {
-      await deleteIntern(selectedIntern, false);
-      await updateInternList(data, false);
-
-      const interns = await getInternList();
-      renderInterns(interns);
-    } else {
-      await editIntern(selectedIntern, data);
+    if (!data.timeIn && !data.timeOut) {
+      data.logs = {
+        timeIn: now,
+        timeOut: ""
+      };
     }
-      selectedIntern = null;
-  } else {
-    await updateInternList(data);
-  }
 
-  form.reset();
-  toggleCrudButtons(false);
+    const newName = data["full name"];
+
+    if (selectedIntern) {
+      if (selectedIntern !== newName) {
+        await deleteIntern(selectedIntern, false);
+        await updateInternList(data, false);
+
+        const interns = await getInternList();
+        renderInterns(interns);
+      } else {
+        await editIntern(selectedIntern, data);
+      }
+        selectedIntern = null;
+    } else {
+      await updateInternList(data);
+    }
+
+    form.reset();
+    toggleCrudButtons(false);
+    
+    submitBtn.value = originalBtnText;
+    submitBtn.disabled = false;
+  } catch (err) {
+    console.error('Error:', err);
+    if (err.message !== 'Scan cancelled' && err.message !== 'No image selected') {
+      alert('Failed to scan ID. Please try again.');
+    }
+    submitBtn.value = originalBtnText;
+    submitBtn.disabled = false;
+  }
 });
+
+// Simple file-based barcode scanner
+async function scanBarcodeSimple() {
+  return new Promise((resolve, reject) => {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    `;
+
+    const video = document.createElement('video');
+    video.style.cssText = `
+      width: 640px;
+      height: 480px;
+      border: 3px solid #00683F;
+      border-radius: 8px;
+    `;
+    video.autoplay = true;
+
+    const canvas = document.createElement('canvas');
+    canvas.style.display = 'none';
+
+    const instructions = document.createElement('p');
+    instructions.textContent = 'Hold the barcode in front of the camera';
+    instructions.style.cssText = `
+      color: white;
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-family: var(--font-poppins);
+    `;
+
+    const status = document.createElement('p');
+    status.textContent = 'Starting camera...';
+    status.style.cssText = `
+      color: #ffff00;
+      font-size: 18px;
+      margin-top: 15px;
+      font-family: var(--font-poppins);
+    `;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Cancel';
+    closeBtn.style.cssText = `
+      padding: 12px 40px;
+      margin-top: 20px;
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font-poppins);
+      font-size: 16px;
+      font-weight: 600;
+    `;
+
+    modal.appendChild(instructions);
+    modal.appendChild(video);
+    modal.appendChild(canvas);
+    modal.appendChild(status);
+    modal.appendChild(closeBtn);
+    document.body.appendChild(modal);
+
+    let scanning = true;
+    let stream = null;
+
+    const cleanup = () => {
+      scanning = false;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      if (document.body.contains(modal)) {
+        document.body.removeChild(modal);
+      }
+    };
+
+    closeBtn.onclick = () => {
+      cleanup();
+      reject(new Error('Scan cancelled'));
+    };
+
+    // Start camera
+    navigator.mediaDevices.getUserMedia({ 
+      video: { facingMode: 'environment' } 
+    })
+    .then(mediaStream => {
+      stream = mediaStream;
+      video.srcObject = mediaStream;
+      
+      video.onloadedmetadata = () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        status.textContent = 'Scanning... Hold barcode steady';
+        
+        const ctx = canvas.getContext('2d');
+        
+        const scanFrame = () => {
+          if (!scanning) return;
+          
+          if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+              inversionAttempts: "attemptBoth",
+            });
+            
+            if (code && code.data) {
+              console.log('Scanned barcode:', code.data);
+              status.textContent = `✓ Scanned: ${code.data}`;
+              status.style.color = '#00ff00';
+              
+              setTimeout(() => {
+                cleanup();
+                resolve(code.data);
+              }, 500);
+              return;
+            }
+          }
+          
+          requestAnimationFrame(scanFrame);
+        };
+        
+        scanFrame();
+      };
+    })
+    .catch(err => {
+      console.error('Camera error:', err);
+      status.textContent = 'Camera access failed: ' + err.message;
+      status.style.color = '#ff0000';
+      
+      setTimeout(() => {
+        cleanup();
+        reject(err);
+      }, 2000);
+    });
+  });
+}
 
 backButton.addEventListener('click', () => {
   window.location.href = '../sessionpage/sessionPage.html';

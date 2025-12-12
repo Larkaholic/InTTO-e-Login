@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, session } = require("electron");
 const path = require("path");
 
 // Enable auto-reload for development
@@ -16,8 +16,16 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
+      enableRemoteModule: true,
+      webSecurity: false,
     },
     autoHideMenuBar: true,
+  });
+
+  // Grant camera permissions for this window
+  mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+    console.log('Window permission requested:', permission);
+    callback(true);
   });
 
   mainWindow.loadFile(path.join(__dirname, "/pages/sessionpage/sessionPage.html"));
@@ -25,6 +33,19 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // Set up permission handler before creating windows
+  session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+    console.log('Permission requested:', permission);
+    // Automatically grant all permissions
+    callback(true);
+  });
+
+  // Also handle permission checks
+  session.defaultSession.setPermissionCheckHandler((webContents, permission) => {
+    console.log('Permission check:', permission);
+    return true;
+  });
+
   startServer();
   createWindow();
 

@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../main.css" />
   <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 </head>
 
 <body>
@@ -96,7 +97,8 @@
             <input type="text" name="full name" id="full-name" placeholder="First Name   M.I.  Last Name" required />
             <input type="email" name="email" id="email" placeholder="emailaddress@students.uc-bcf.edu.ph" required />
             <input type="text" name="address" id="address" placeholder="School, Department, or Company Name" required />
-            <input type="submit" value="Submit Details" class="submit" />
+            <input type="hidden" name="idNumber" id="id-number" />
+            <input type="submit" value="Submit Details" class="submit" id="submit-btn" />
           </form>
         </div>
         <button class="back-button" id="back-button">
@@ -134,16 +136,7 @@
           <input type="search" name="" id="search-bar" placeholder="Search Name" />
         </div>
         <div class="list" id="list">
-          <div class="person">
-            <div class="person-top">
-              <p>Juan F. Dela Cruzes</p>
-              <p>96 Hours</p>
-            </div>
-            <div class="person-bottom">
-              <p>College</p>
-              <button class="Time">Time-in</button>
-            </div>
-          </div>
+          <!-- Interns will be dynamically added here -->
         </div>
       </div>
     </div>
