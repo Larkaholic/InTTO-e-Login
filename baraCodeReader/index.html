@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Reader - ML Kit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📷 Barcode Reader</h1>
+            <p>Powered by Google ML Kit Technology</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Camera Section -->
+            <!-- Camera Section -->
+            <!-- Camera Section -->
+            <div class="camera-section">
+                <div class="video-container">
+                    <video id="video" autoplay playsinline></video>
+                    <div class="scan-overlay">
+                        <div class="scan-frame"></div>
+                        <p class="scan-instruction">Position barcode within frame</p>
+                    </div>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">
+                        <span>📹</span> Start Camera
+                    </button>
+                    <button id="stopBtn" class="btn btn-secondary" disabled>
+                        <span>⏹️</span> Stop Camera
+                    </button>
+                    <button id="switchBtn" class="btn btn-secondary" disabled>
+                        <span>🔄</span> Switch Camera
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <h2>Scan Results</h2>
+                <div id="results" class="results-container">
+                    <div class="no-results">
+                        <p>No barcode detected yet</p>
+                        <p class="hint">Start camera and scan a barcode</p>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <h3>Scan History</h3>
+                    <div id="history" class="history-list"></div>
+                    <button id="clearHistory" class="btn btn-clear">Clear History</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Supports: QR Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 39, Code 93, Code 128, ITF, RSS-14, Data Matrix, PDF417, and more</p>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
